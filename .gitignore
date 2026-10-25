@@ -1,0 +1,34 @@
+# Swift Package Manager & Xcode Cache
+.build/
+Packages/
+Package.resolved
+xcuserdata/
+DerivedData/
+.swiftpm/
+.netrc
+
+# IDE & Editor Configurations
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.swp
+*~
+*.bak
+
+# macOS System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+
+# Environment & Local Secrets
+*.env
+*.env.*
+*.local

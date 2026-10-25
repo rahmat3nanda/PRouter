@@ -1,0 +1,290 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.4 effective-5.10 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)
+// swift-module-flags: -target x86_64-apple-macos13.0 -enable-objc-interop -enable-library-evolution -language-mode 5 -O -enable-experimental-feature DebugDescriptionMacro -module-name PRouter -package-name prouter_private
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4
+import Combine
+import Foundation
+import Swift
+import SwiftUI
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_hasMissingDesignatedInitializers @_Concurrency::MainActor final public class PDeepLinkManager {
+  @_Concurrency::MainActor public static let shared: PRouter::PDeepLinkManager
+  @_Concurrency::MainActor final public var appScheme: Swift::String?
+  @_Concurrency::MainActor final public var onUnhandledURL: ((Foundation::URL) -> Swift::Void)?
+  @objc deinit
+}
+extension PRouter::PDeepLinkManager {
+  @_Concurrency::MainActor final public func register<Route>(_ routeType: Route.Type, pattern: Swift::String? = nil) where Route : PRouter::PDeepLinkRoute
+  @_Concurrency::MainActor final public func register<Route>(pattern: Swift::String, resolve: @escaping (_ url: Foundation::URL, _ parameters: [Swift::String : Swift::String]) -> Route?) where Route : PRouter::PRoute
+  @_Concurrency::MainActor final public func register<Route>(_ resolve: @escaping (_ url: Foundation::URL) -> Route?) where Route : PRouter::PRoute
+  @_Concurrency::MainActor final public func unregisterAll()
+}
+extension PRouter::PDeepLinkManager {
+  @_Concurrency::MainActor final public func resolve(url: Foundation::URL) -> (any PRouter::PRoute)?
+  @discardableResult
+  @_Concurrency::MainActor final public func handle(url: Foundation::URL, strategy: PRouter::PDeepLinkStrategy = .push) -> Swift::Bool
+  @discardableResult
+  @_Concurrency::MainActor final public func handle(path: Swift::String, strategy: PRouter::PDeepLinkStrategy = .push) -> Swift::Bool
+}
+public enum PDeepLinkStrategy : Swift::Sendable {
+  case push
+  case replace
+  case replaceAll
+  case popUntilOrPush
+  case ignoreIfCurrent
+  case custom(@_Concurrency::MainActor @Sendable (PRouter::PRouteRegistry, any PRouter::PRoute) -> Swift::Void)
+}
+public enum PURLPatternMatcher : Swift::Sendable {
+  public static func match(pattern: Swift::String, with url: Foundation::URL) -> [Swift::String : Swift::String]?
+}
+extension SwiftUICore::View {
+  @_Concurrency::MainActor @preconcurrency public func onDeepLink(strategy: PRouter::PDeepLinkStrategy = .push, fallback: ((Foundation::URL) -> Swift::Void)? = nil) -> some SwiftUICore::View
+  
+}
+extension SwiftUICore::View {
+  @_Concurrency::MainActor @preconcurrency public func registerRoutes<Route>(for routeType: Route.Type = Route.self) -> some SwiftUICore::View where Route : PRouter::PRoute
+  
+}
+@_Concurrency::MainActor public enum PRouter {
+  @_Concurrency::MainActor public static var store: PRouter::PRouteRegistry {
+    get
+  }
+  @_Concurrency::MainActor public static var deepLink: PRouter::PDeepLinkManager {
+    get
+  }
+  @_Concurrency::MainActor public static var delegates: PRouter::PDelegateRegistry {
+    get
+  }
+}
+extension PRouter::PRouter {
+  @_Concurrency::MainActor public static var appScheme: Swift::String? {
+    get
+    set
+  }
+  @_Concurrency::MainActor public static var onUnhandledURL: ((Foundation::URL) -> Swift::Void)? {
+    get
+    set
+  }
+}
+extension PRouter::PRouter {
+  @_Concurrency::MainActor public static var rootRoute: (any PRouter::PRoute)? {
+    get
+    set
+  }
+  @_Concurrency::MainActor public static var rootPath: Swift::String? {
+    get
+    set
+  }
+  @_Concurrency::MainActor public static var current: (any PRouter::PRoute)? {
+    get
+  }
+  @_Concurrency::MainActor public static func isCurrentRoute(_ route: any PRouter::PRoute) -> Swift::Bool
+  @_Concurrency::MainActor public static func setRoot(_ route: any PRouter::PRoute, clearStack: Swift::Bool = true)
+}
+extension PRouter::PRouter {
+  @_Concurrency::MainActor public static func push(_ route: any PRouter::PRoute)
+  @discardableResult
+  @_Concurrency::MainActor public static func push(_ path: Swift::String) -> Swift::Bool
+  @discardableResult
+  @_Concurrency::MainActor public static func replace(with path: Swift::String) -> Swift::Bool
+  @discardableResult
+  @_Concurrency::MainActor public static func replaceAll(with path: Swift::String) -> Swift::Bool
+  @_Concurrency::MainActor public static func replace(with route: any PRouter::PRoute, animated: Swift::Bool = false)
+  @_Concurrency::MainActor public static func replaceAll(with route: any PRouter::PRoute, animated: Swift::Bool = false)
+  @_Concurrency::MainActor public static func pop(_ count: Swift::Int = 1)
+  @_Concurrency::MainActor public static func popToRoot()
+  @discardableResult
+  @_Concurrency::MainActor public static func popUntil(_ route: any PRouter::PRoute, inclusive: Swift::Bool = false) -> Swift::Bool
+  @_Concurrency::MainActor public static func popUntilOrPush(_ route: any PRouter::PRoute)
+}
+extension PRouter::PRouter {
+  @_Concurrency::MainActor public static func resolve(url: Foundation::URL) -> (any PRouter::PRoute)?
+  @_Concurrency::MainActor public static func registerDeepLink<Route>(_ routeType: Route.Type, pattern: Swift::String? = nil) where Route : PRouter::PDeepLinkRoute
+  @_Concurrency::MainActor public static func registerDeepLink<Route>(pattern: Swift::String, resolve: @escaping (_ url: Foundation::URL, _ parameters: [Swift::String : Swift::String]) -> Route?) where Route : PRouter::PRoute
+  @discardableResult
+  @_Concurrency::MainActor public static func handle(url: Foundation::URL, strategy: PRouter::PDeepLinkStrategy = .push) -> Swift::Bool
+  @discardableResult
+  @_Concurrency::MainActor public static func handle(path: Swift::String, strategy: PRouter::PDeepLinkStrategy = .push) -> Swift::Bool
+}
+extension PRouter::PRouter {
+  @_Concurrency::MainActor public static func register<Delegate>(_ delegate: Delegate) where Delegate : PRouter::PRouteDelegate
+  @_Concurrency::MainActor public static func delegate<Delegate>(_ type: Delegate.Type = Delegate.self) -> Delegate?
+  @_Concurrency::MainActor public static func coordinator<Coordinator>(_ type: Coordinator.Type = Coordinator.self) -> Coordinator?
+  @_Concurrency::MainActor public static func unregister<Delegate>(_ delegate: Delegate) where Delegate : PRouter::PRouteDelegate
+  @_Concurrency::MainActor public static func unregister<Delegate>(_ type: Delegate.Type)
+}
+public typealias PRouteCoordinator = PRouter::PRouteDelegate
+public typealias PCoordinatorRegistry = PRouter::PDelegateRegistry
+public typealias PRootView<Fallback> = PRouter::PRouterRootView<Fallback> where Fallback : SwiftUICore::View
+public protocol PDeepLinkRoute : PRouter::PRoute {
+  static var urlPattern: Swift::String { get }
+  static func resolve(from url: Foundation::URL, parameters: [Swift::String : Swift::String]) -> Self?
+}
+extension PRouter::PDeepLinkRoute {
+  public static var urlPattern: Swift::String {
+    get
+  }
+  public static func defaultPattern() -> Swift::String
+}
+@_Concurrency::MainActor public protocol PRoute : Swift::Hashable {
+  associatedtype Destination : SwiftUICore::View
+  @_Concurrency::MainActor var path: Swift::String { get }
+  @SwiftUICore::ViewBuilder @_Concurrency::MainActor func destination() -> Self.Destination
+}
+extension PRouter::PRoute {
+  @_Concurrency::MainActor public func eraseToAnyView() -> SwiftUICore::AnyView
+  @_Concurrency::MainActor public var path: Swift::String {
+    get
+  }
+  @_Concurrency::MainActor public func defaultPath() -> Swift::String
+}
+public protocol PRouteDelegate : AnyObject {
+}
+@_hasMissingDesignatedInitializers @_Concurrency::MainActor final public class PDelegateRegistry {
+  @_Concurrency::MainActor public static let shared: PRouter::PDelegateRegistry
+  @objc deinit
+}
+extension PRouter::PDelegateRegistry {
+  @_Concurrency::MainActor final public func register<Delegate>(_ delegate: Delegate) where Delegate : PRouter::PRouteDelegate
+  @_Concurrency::MainActor final public func unregister<Delegate>(_ delegate: Delegate) where Delegate : PRouter::PRouteDelegate
+  @_Concurrency::MainActor final public func unregister<Delegate>(_ type: Delegate.Type)
+  @_Concurrency::MainActor final public func unregisterAll()
+}
+extension PRouter::PDelegateRegistry {
+  @_Concurrency::MainActor final public func delegate<Delegate>(_ type: Delegate.Type = Delegate.self) -> Delegate?
+  @_Concurrency::MainActor final public func coordinator<Coordinator>(_ type: Coordinator.Type = Coordinator.self) -> Coordinator?
+}
+@_hasMissingDesignatedInitializers @_Concurrency::MainActor final public class PRouteRegistry : Combine::ObservableObject {
+  @_Concurrency::MainActor public static let shared: PRouter::PRouteRegistry
+  @Combine::Published<(any PRouter::PRoute)?> @_projectedValueProperty($rootRoute) @_Concurrency::MainActor final public var rootRoute: (any PRouter::PRoute)? {
+    get
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    set
+  }
+  @_Concurrency::MainActor final public var $rootRoute: Combine::Published<(any PRouter::PRoute)?>.Combine::Publisher {
+    get
+    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
+    set
+  }
+  @Combine::Published<Swift::String?> @_projectedValueProperty($rootPath) @_Concurrency::MainActor final public var rootPath: Swift::String? {
+    get
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    set
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    _modify
+  }
+  @_Concurrency::MainActor final public var $rootPath: Combine::Published<Swift::String?>.Combine::Publisher {
+    get
+    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
+    set
+  }
+  @Combine::Published<SwiftUI::NavigationPath> @_projectedValueProperty($path) @_Concurrency::MainActor final public var path: SwiftUI::NavigationPath {
+    get
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    set
+  }
+  @_Concurrency::MainActor final public var $path: Combine::Published<SwiftUI::NavigationPath>.Combine::Publisher {
+    get
+    @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
+    set
+  }
+  @_Concurrency::MainActor final public var routes: [any PRouter::PRoute] {
+    get
+  }
+  @_Concurrency::MainActor final public var current: (any PRouter::PRoute)? {
+    get
+  }
+  public typealias ObjectWillChangePublisher = Combine::ObservableObjectPublisher
+  @objc deinit
+}
+extension PRouter::PRouteRegistry {
+  @_Concurrency::MainActor final public func push(_ route: any PRouter::PRoute)
+  @_Concurrency::MainActor final public func replace(with route: any PRouter::PRoute, animated: Swift::Bool = false)
+  @_Concurrency::MainActor final public func setRoot(_ route: any PRouter::PRoute, clearStack: Swift::Bool = true)
+  @_Concurrency::MainActor final public func replaceAll(with route: any PRouter::PRoute, animated: Swift::Bool = false)
+  @_Concurrency::MainActor final public func pop(_ count: Swift::Int = 1)
+  @_Concurrency::MainActor final public func popToRoot()
+  @discardableResult
+  @_Concurrency::MainActor final public func popUntil(_ route: any PRouter::PRoute, inclusive: Swift::Bool = false) -> Swift::Bool
+  @discardableResult
+  @_Concurrency::MainActor final public func popUntil<Route>(where predicate: (Route) -> Swift::Bool, inclusive: Swift::Bool = false) -> Swift::Bool where Route : PRouter::PRoute
+  @discardableResult
+  @_Concurrency::MainActor final public func popUntil(_ path: Swift::String, inclusive: Swift::Bool = false) -> Swift::Bool
+  @_Concurrency::MainActor final public func popUntilOrPush(_ route: any PRouter::PRoute)
+}
+extension PRouter::PRouteRegistry {
+  @_Concurrency::MainActor final public func isCurrentRoute(_ route: any PRouter::PRoute) -> Swift::Bool
+}
+@_Concurrency::MainActor final public class Router<Route> : Combine::ObservableObject where Route : PRouter::PRoute {
+  @_Concurrency::MainActor final public let routeRegistry: PRouter::PRouteRegistry
+  @_Concurrency::MainActor final public let delegateRegistry: PRouter::PDelegateRegistry
+  @_Concurrency::MainActor final public let deepLink: PRouter::PDeepLinkManager
+  @_Concurrency::MainActor public init()
+  public typealias ObjectWillChangePublisher = Combine::ObservableObjectPublisher
+  @objc deinit
+}
+extension PRouter::Router {
+  @_Concurrency::MainActor final public var current: Route? {
+    get
+  }
+  @_Concurrency::MainActor final public func isCurrent(_ route: Route) -> Swift::Bool
+}
+extension PRouter::Router {
+  @_Concurrency::MainActor final public func push(_ route: Route)
+  @_Concurrency::MainActor final public func push(_ route: any PRouter::PRoute)
+  @_Concurrency::MainActor final public func replace(with route: Route, animated: Swift::Bool = false)
+  @_Concurrency::MainActor final public func replace(with route: any PRouter::PRoute, animated: Swift::Bool = false)
+  @_Concurrency::MainActor final public func replaceAll(with route: Route, animated: Swift::Bool = false)
+  @_Concurrency::MainActor final public func replaceAll(with route: any PRouter::PRoute, animated: Swift::Bool = false)
+  @_Concurrency::MainActor final public func setRoot(_ route: Route, clearStack: Swift::Bool = true)
+  @_Concurrency::MainActor final public func setRoot(_ route: any PRouter::PRoute, clearStack: Swift::Bool = true)
+  @_Concurrency::MainActor final public func pop(_ count: Swift::Int = 1)
+  @_Concurrency::MainActor final public func popToRoot()
+  @discardableResult
+  @_Concurrency::MainActor final public func popUntil(_ route: Route, inclusive: Swift::Bool = false) -> Swift::Bool
+  @discardableResult
+  @_Concurrency::MainActor final public func popUntil(_ route: any PRouter::PRoute, inclusive: Swift::Bool = false) -> Swift::Bool
+  @discardableResult
+  @_Concurrency::MainActor final public func popUntil(where predicate: (Route) -> Swift::Bool, inclusive: Swift::Bool = false) -> Swift::Bool
+  @discardableResult
+  @_Concurrency::MainActor final public func popUntil(_ path: Swift::String, inclusive: Swift::Bool = false) -> Swift::Bool
+  @_Concurrency::MainActor final public func popUntilOrPush(_ route: Route)
+  @_Concurrency::MainActor final public func popUntilOrPush(_ route: any PRouter::PRoute)
+}
+extension PRouter::Router {
+  @discardableResult
+  @_Concurrency::MainActor final public func push(_ path: Swift::String) -> Swift::Bool
+  @discardableResult
+  @_Concurrency::MainActor final public func replace(with path: Swift::String) -> Swift::Bool
+  @discardableResult
+  @_Concurrency::MainActor final public func replaceAll(with path: Swift::String) -> Swift::Bool
+}
+extension PRouter::Router {
+  @discardableResult
+  @_Concurrency::MainActor final public func handle(url: Foundation::URL, strategy: PRouter::PDeepLinkStrategy = .push) -> Swift::Bool
+}
+extension PRouter::Router {
+  @_Concurrency::MainActor final public func register<Delegate>(_ delegate: Delegate) where Delegate : PRouter::PRouteDelegate
+  @_Concurrency::MainActor final public func delegate<Delegate>(_ type: Delegate.Type = Delegate.self) -> Delegate?
+  @_Concurrency::MainActor final public func coordinator<Coordinator>(_ type: Coordinator.Type = Coordinator.self) -> Coordinator?
+  @_Concurrency::MainActor final public func unregister<Delegate>(_ delegate: Delegate) where Delegate : PRouter::PRouteDelegate
+  @_Concurrency::MainActor final public func unregister<Delegate>(_ type: Delegate.Type)
+}
+@_Concurrency::MainActor @preconcurrency public struct PRouterRootView<Fallback> : SwiftUICore::View where Fallback : SwiftUICore::View {
+  @_Concurrency::MainActor @preconcurrency public init(@SwiftUICore::ViewBuilder fallback: @escaping () -> Fallback)
+  @_Concurrency::MainActor @preconcurrency public var body: some SwiftUICore::View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s7PRouter0A8RootViewV4bodyQrvp", 0) __<Fallback>
+}
+extension PRouter::PRouterRootView where Fallback == SwiftUICore::EmptyView {
+  @_Concurrency::MainActor @preconcurrency public init()
+}
+extension PRouter::PDeepLinkManager : Swift::Sendable {}
+extension PRouter::PRouter : Swift::Sendable {}
+extension PRouter::PDelegateRegistry : Swift::Sendable {}
+extension PRouter::PRouteRegistry : Swift::Sendable {}
+extension PRouter::Router : Swift::Sendable {}
+extension PRouter::PRouterRootView : Swift::Sendable {}
